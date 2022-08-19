@@ -1,0 +1,18 @@
+.page {
+  &__content {
+    display: flex;
+    padding: 0 16px;
+    background-color:lightblue;
+  }
+  &__toolbar {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: #8e19d2;
+    color: white;
+    font-weight: 600;
+  }
+}
