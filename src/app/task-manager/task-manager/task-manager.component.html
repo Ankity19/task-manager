@@ -1,0 +1,51 @@
+<div>
+  <div clas="d-flex">
+    <form id="myForm" [formGroup]="thisIsMyForm">
+      <div [formArrayName]="'formArrayName'">
+
+        <div *ngIf="numberOflists" class="d-flex flex-wrap">
+          <div *ngFor="let list of numberOflists; let i = index;" class="p-2">
+            <div class="card task-container">
+              <div class="card-header">
+                {{list?.name}}
+              </div>
+              <div class="card-body bg-secondary">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item mt-2" *ngFor="let card of list.cards; let i = index;">{{card?.cardName}}
+                  </li>
+                </ul>
+                <div *ngIf="list?.isCardsFormOpen" class="card my-2">
+                  <div class="card-body">
+                    <h5 class="card-title">Add new card to the list {{list?.name}}:</h5>
+                    <div [formGroupName]="i">
+                      <label for="cardName">Card Name: </label>
+                      <input id="cardName" type="text" formControlName="cardName" class="m-2">
+                      <div *ngIf="getValidity(i)" class="text-danger">
+                        Name is required.
+                      </div>
+                      <button type="button" class="btn btn-primary m-2"
+                        (click)="saveCard(i);list.isCardsFormOpen=!list.isCardsFormOpen" [disabled]="getValidity(i)">save</button>
+                    </div>
+                  </div>
+                </div>
+                <a href="#" class="btn btn-link" (click)="list.isCardsFormOpen=!list.isCardsFormOpen">Add a card</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div *ngIf="addListOpen" class="card m-2">
+      <div class="card-body">
+        <h5 class="card-title">Add new list:</h5>
+        <label for="name">Name: </label>
+        <input id="name" type="text" [formControl]="name" class="m-2">
+        <div *ngIf="name.errors?.['required'] && name.touched" class="text-danger">
+          Name is required.
+        </div>
+        <button type="button" class="btn btn-primary m-2" (click)="saveList()" [disabled]="name.invalid">save</button>
+      </div>
+    </div>
+    <button type="button" class="btn btn-link" (click)="addList()">Add another list</button>
+  </div>
+</div>
